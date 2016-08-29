@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.board.dao.BoardMapper">
+	<select id="list" parameterType="map" resultType="boardCommand">
+
+		SELECT
+		seq,
+		id,
+			<![CDATA[
+			REPLACE(REPLACE(title,'<','&lt;'),'>','&gt;') title,
+			]]>
+		content,
+		hit,
+		regdate,
+		filename
+		FROM (SELECT
+		a.*,
+		rownum rnum
+		FROM (SELECT
+		*
+		FROM sboard
+		<where>
+			<if test="keyword !='' and keyfield == 'title'">
+				title like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword !='' and keyfield == 'id'">
+				id like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword !='' and keyfield == 'content'">
+				content like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword !='' and keyfield == 'all'">
+				title like '%' || #{keyword} || '%' or
+				id like '%' || #{keyword} || '%' or
+				content like '%' || #{keyword} || '%'
+			</if>
+		</where>
+		ORDER BY seq DESC)a)
+		<![CDATA[WHERE rnum >= #{start} and rnum <= #{end}]]>
+	</select>
+	<select id="getRowCount" parameterType="map" resultType="Integer">
+		SELECT
+		count(*)
+		FROM sboard
+		<where>
+			<if test="keyword !='' and keyfield == 'title'">
+				title like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword !='' and keyfield == 'id'">
+				id like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword !='' and keyfield == 'content'">
+				content like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword !='' and keyfield == 'all'">
+				title like '%' || #{keyword} || '%' or
+				id like '%' || #{keyword} || '%' or
+				content like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="boardReplyCommand">
+		SELECT
+		 re_no,
+		 re_content,
+		 to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') re_date,
+		 seq,
+		 id
+		FROM (SELECT
+				a.*,
+				rownum rnum
+			   FROM (SELECT
+			   			*
+			   		FROM sreply
+			   		WHERE seq = #{seq}
+			   		ORDER BY re_no DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>	   		
+	</select>
+	<delete id="deleteReplyBySeqList" parameterType="list">
+		DELETE FROM sreply WHERE seq in
+		<foreach collection="list" item="seq" open="(" separator="," close=")">
+			#{seq}
+		</foreach>	 		
+	</delete>
+</mapper>  
+
+
+
+
+
+
+

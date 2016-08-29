@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="memberWrite" extends="main">
+		<put-attribute name="title" value="회원가입"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberWrite.jsp"/>
+	</definition>
+	<definition name="memberLogin" extends="memberWrite">
+		<put-attribute name="title" value="로그인"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberLogin.jsp"/>
+	</definition>
+	<definition name="memberView" extends="memberWrite">
+		<put-attribute name="title" value="회원 정보 상세"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberView.jsp"/>
+	</definition>
+	<definition name="memberModify" extends="memberWrite">
+		<put-attribute name="title" value="회원 정보 수정"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/>
+	</definition>
+	<definition name="memberDelete" extends="memberWrite">
+		<put-attribute name="title" value="회원 정보 삭제"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberDelete.jsp"/>
+	</definition>
+</tiles-definitions>
