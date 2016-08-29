@@ -8,7 +8,7 @@
 		<ul class="search">
 			<li>
 				<select name="keyfield">
-					<option value="title">제목</option>
+					<option value="title">너는</option>
 					<option value="writer">이름</option>
 					<option value="content">내용</option>
 					<option value="all">전체</option>
