@@ -11,7 +11,7 @@
 					<option value="title">수정</option>
 					<option value="writer">수정2</option>
 					<option value="content">수정3</option>
-					<option value="all">수정4</option>
+					<option value="all">수정5</option>
 				</select>
 			</li>
 			<li>
